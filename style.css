@@ -1,8 +1,7 @@
-/* Import Google font - Poppins */
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
 
 :root {
-  --primary-color: #5598fd;
+  --primary-clr: #5598fd;
 }
 
 * {
@@ -15,18 +14,19 @@ body {
   display: flex;
   justify-content: center;
   min-height: 100vh;
-  min-width: 1000px;
+  min-width: 100px;
   padding: 50px;
-  background: var(--primary-color);
+  background: var(--primary-clr);
+  transition: background-image 0.3s ease;
   background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
     url("./images/cd.jpg");
   background-size: cover;
   background-position: center;
-  transition: background-image 0.3s ease;
 }
 img {
   width: 100%;
 }
+
 .wrapper {
   display: flex;
   width: 1200px;
@@ -38,18 +38,10 @@ img {
   width: 30%;
   min-width: 250px;
   padding: 20px;
-  background: rgba(255, 255, 255, 0.815);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-}
-.main {
-  width: 100%;
-  min-width: 400px;
-  padding: 20px 40px;
-  background-color: #f6f6f8;
-  position: relative;
-  padding-bottom: 90px;
+  background-color: rgba(255, 255, 255, 0.815);
 }
 .search {
   display: flex;
@@ -63,7 +55,7 @@ img {
   width: 100%;
   height: 40px;
   border: 1px solid #ced4da;
-  border-top-left-radius: 5px;
+  border-top-left-radius: 4px;
   border-bottom-left-radius: 5px;
   padding: 0 15px;
   font-size: 14px;
@@ -71,7 +63,7 @@ img {
 }
 .search input:focus {
   outline: none;
-  border: 1px solid var(--primary-color);
+  border: 1px solid var(--primary-clr);
 }
 .search button {
   min-width: 40px;
@@ -79,36 +71,10 @@ img {
   border: none;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
-  background: var(--primary-color);
-  color: #fff;
+  background-color: var(--primary-clr);
   font-size: 14px;
+  color: #fff;
   cursor: pointer;
-}
-.search ul {
-  max-height: 300px;
-  overflow-y: auto;
-  position: absolute;
-  width: 100%;
-  top: 40px;
-  border-radius: 5px;
-  transition: all 0.3s ease;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  background-color: #fff;
-}
-.search ul li {
-  padding: 10px 15px;
-  border-bottom: 1px solid #f1f1f1;
-  cursor: pointer;
-  text-transform: capitalize;
-}
-.search ul li:last-child {
-  border-bottom: none;
-}
-.search ul li:hover {
-  background-color: #f1f1f1;
-}
-.search ul li.active {
-  background-color: #f1f1f1;
 }
 .weather-icon {
   width: 100%;
@@ -121,15 +87,15 @@ img {
   width: 80%;
   object-fit: cover;
 }
-.temperature {
+.temprature {
   display: flex;
 }
-.temperature #temp {
+.temprature #temp {
   font-size: 70px;
   font-weight: 100;
   line-height: 1;
 }
-.temperature span {
+.temprature span {
   font-size: 40px;
   margin-top: -10px;
   display: block;
@@ -137,8 +103,8 @@ img {
 .divider {
   width: 100%;
   height: 1px;
-  background: #e9ecef;
   margin: 20px 0;
+  background-color: #000;
 }
 .condition-rain {
   font-size: 12px;
@@ -160,38 +126,44 @@ img {
   gap: 10px;
   margin-top: 10px;
 }
-
+.main {
+  width: 100%;
+  min-width: 400px;
+  padding: 20px 40px;
+  position: relative;
+  padding-bottom: 90px;
+  background-color: #f6f6f8;
+}
 .main nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
-.main nav .options {
+nav .options {
   display: flex;
   gap: 20px;
   align-items: center;
 }
-.main nav .options button {
+.options button {
   border: none;
-  background: none;
+  background: transparent;
   font-size: 16px;
   font-weight: 600;
   color: #495057;
   cursor: pointer;
   text-transform: capitalize;
 }
-.main nav .options button.active {
-  color: var(--primary-color);
+.options button.active {
+  color: var(--primary-clr);
 }
-
-.main nav .units button {
+nav .units button {
   width: 40px;
   height: 40px;
   border-radius: 50%;
   color: #1a1a1a;
   background-color: #fff;
 }
-.main nav .units button.active {
+.units button.active {
   color: #fff;
   background-color: #1a1a1a;
 }
@@ -201,7 +173,6 @@ img {
   gap: 20px;
   margin-top: 50px;
 }
-
 .cards .card {
   width: 100px;
   height: 130px;
@@ -225,8 +196,8 @@ img {
 .card .day-temp {
   font-size: 12px;
   display: flex;
+  align-items: center;
   justify-content: center;
-  display: flex;
 }
 .highlights {
   display: flex;
@@ -240,8 +211,7 @@ img {
   font-weight: 600;
   text-transform: capitalize;
 }
-
-.card2 {
+.highlights .card2 {
   width: 250px;
   height: 150px;
   border-radius: 20px;
@@ -254,7 +224,6 @@ img {
 .card2 .card-heading {
   color: #c2c2c2;
 }
-
 .card2 .content {
   margin-top: 20px;
 }
@@ -262,7 +231,7 @@ img {
   text-align: center;
   font-size: 30px;
 }
-.card2 .content p:nth-child(2) {
+.card2 .content p:last-child {
   font-size: 12px;
   margin-top: 20px;
   text-align: left;
