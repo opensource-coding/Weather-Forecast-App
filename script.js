@@ -20,7 +20,9 @@ const temp = document.getElementById("temp"),
   fahrenheitBtn = document.querySelector(".fahrenheit"),
   hourlyBtn = document.querySelector(".hourly"),
   weekBtn = document.querySelector(".week"),
-  tempUnit = document.querySelectorAll(".temp-unit");
+  tempUnit = document.querySelectorAll(".temp-unit"),
+  searchForm = document.querySelector("#search"),
+  search = document.querySelector("#query");
 
 let currentCity = "";
 let currentUnit = "c";
@@ -70,7 +72,7 @@ function getPublicIp() {
     .then((data) => {
       console.log(data);
       currentCity = data.city;
-      getWeatherData(data.city, currentUnit, hourlyorWeek);
+      //getWeatherData(data.city, currentUnit, hourlyorWeek);
     });
 }
 getPublicIp();
@@ -353,5 +355,136 @@ function changeTimeSpan(unit) {
     }
     // update weather on time change
     getWeatherData(currentCity, currentUnit, hourlyorWeek);
+  }
+}
+
+searchForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  let location = search.value;
+  if (location) {
+    currentCity = location;
+    getWeatherData(currentCity, currentUnit, hourlyorWeek);
+  }
+});
+
+//lets create a cities array which we want to suggest or we can use any api for this
+
+cities = [
+  "Abbottabad",
+  "Lahore",
+  "Karachi",
+  "Islamabad",
+  "Islamabad",
+  "Islamabad",
+  "Islamabad",
+  "Peshawar",
+  "Multan",
+  "Rawalpindi",
+  "Bahawalnagar",
+  "Chakwal",
+];
+
+var currentFocus;
+// adding eventlistner on search input
+search.addEventListener("input", function (e) {
+  removeSuggestions();
+  var a,
+    b,
+    i,
+    val = this.value;
+  //if there is nothing search input do nothing
+  if (!val) {
+    return false;
+  }
+  currentFocus = -1;
+
+  //creating a ul with a id suggestion
+  a = document.createElement("ul");
+  a.setAttribute("id", "suggestions");
+  //append the ul to its parent which is search form
+  this.parentNode.appendChild(a);
+  //adding li's with matching search suggestions
+  for (i = 0; i < cities.length; i++) {
+    //check if items start with same letters which are in input
+    if (cities[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+      // if any suggestion matching then create li
+      b = document.createElement("li");
+      // ading content in li
+      //strong to make the matchin letters bold
+      b.innerHTML = "<strong>" + cities[i].substr(0, val.length) + "</strong>";
+      //remaining part of suggestion
+      b.innerHTML += cities[i].substr(val.length);
+      //input field to hold the suggestion value
+      b.innerHTML += "<input type='hidden' value='" + cities[i] + "'>";
+
+      //adding eventListner on suggestion
+      b.addEventListener("click", function (e) {
+        //on click set the search input value with th clicked suggestion value
+        search.value = this.getElementsByTagName("input")[0].value;
+        removeSuggestions();
+      });
+
+      //append suggestion li to ul
+      a.appendChild(b);
+    }
+  }
+});
+
+//its working but every new suggestion is coming over prev
+//lets remove prev suggestion then add new ones
+
+function removeSuggestions() {
+  //select the ul which is being adding on search input
+  var x = document.getElementById("suggestions");
+  //if x exists remove it
+  if (x) x.parentNode.removeChild(x);
+}
+
+//lets add up and down keys functionality to select a suggestion
+
+search.addEventListener("keydown", function (e) {
+  var x = document.getElementById("suggestions");
+  // selaect the li elemets of suggestion ul
+  if (x) x = x.getElementsByTagName("li");
+
+  if (e.keyCode == 40) {
+    //if key code is down button
+    currentFocus++;
+    //lets create a function to adda active suggsetion
+    addActive(x);
+  } else if (e.keyCode == 38) {
+    //if key code is up button
+    currentFocus--;
+    addActive(x);
+  }
+  if (e.keyCode == 13) {
+    //if enter is presed add the current select suggestion in input field
+
+    e.preventDefault();
+    if (currentFocus > -1) {
+      //if any suggestion is selected click it
+      if (x) x[currentFocus].click();
+    }
+  }
+});
+function addActive(x) {
+  //if there is no suggestion return as it is
+
+  if (!x) return false;
+  removeActive(x);
+  //if current focus is more than the length of suggestion arraya make it 0
+  if (currentFocus >= x.length) currentFocus = 0;
+  // if its less than 0 make it last suggestion equals
+  if (currentFocus < 0) currentFocus = x.length - 1;
+
+  //adding active class on focused li
+  x[currentFocus].classList.add("active");
+}
+
+//its working but we need to remove previusly actived suggestion
+
+function removeActive(x) {
+  for (var i = 0; i < x.length; i++) {
+    x[i].classList.remove("active");
   }
 }
